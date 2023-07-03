@@ -20,8 +20,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(AuthException.class)
-    public ResponseEntity<ExceptionResponse> tokenError(AuthException ex) {
+    @ExceptionHandler(AuthException.class)    public ResponseEntity<ExceptionResponse> tokenError(AuthException ex) {
 
         final ExceptionResponse response = new ExceptionResponse();
         response.setErrorCode(HttpStatus.UNAUTHORIZED.value());

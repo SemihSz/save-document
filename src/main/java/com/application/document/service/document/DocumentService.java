@@ -1,5 +1,6 @@
 package com.application.document.service.document;
 
+import com.application.document.model.request.document.SaveDocumentBase64Request;
 import com.application.document.model.request.document.SaveDocumentRequest;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,7 @@ public interface DocumentService {
      * @return
      */
     Boolean save(SaveDocumentRequest request);
+
+    Boolean saveBase64(SaveDocumentBase64Request request);
 
 }

@@ -5,12 +5,11 @@ import com.application.document.model.request.document.SaveDocumentRequest;
 import com.application.document.repository.DocumentRepository;
 import com.application.document.task.SimpleTask;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.util.unit.DataSize;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -20,22 +19,24 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class SaveDocumentService implements SimpleTask<SaveDocumentRequest, Boolean> {
 
-    private static final DataSize MAX_FILE_SIZE = DataSize.ofMegabytes(10); // 10 MB
-
+    private final MultipartFileControlService fileControlService;
 
     private final DocumentRepository documentRepository;
+
     @Override
     public Boolean apply(SaveDocumentRequest request) {
 
         final String fileName = StringUtils.cleanPath(Objects.requireNonNull(request.getFile().getOriginalFilename()));
 
-            try {
-                if (request.getFile() != null && request.getFile().getSize() > MAX_FILE_SIZE.toBytes()) {
-                throw new FileSizeLimitExceededException("File size exceeds the allowed limit.", 5, 5);
-                }
-            } catch (FileSizeLimitExceededException e) {
-                throw new RuntimeException(e);
-            }
+        /**
+         * Control file size and allowed extensions
+         */
+        try {
+            fileControlService.accept(request.getFile());
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         try {
             final DocumentEntity document = DocumentEntity.builder()
@@ -44,6 +45,7 @@ public class SaveDocumentService implements SimpleTask<SaveDocumentRequest, Bool
                     .fileType(request.getFile().getContentType())
                     .fileName(fileName)
                     .data(request.getFile().getBytes())
+                    .time(LocalDateTime.now())
                     .build();
             documentRepository.save(document);
         } catch (IOException e) {

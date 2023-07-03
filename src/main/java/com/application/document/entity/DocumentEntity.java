@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 /**
  * Created by Semih, 3.07.2023
@@ -31,5 +32,7 @@ public class DocumentEntity {
     private String fileType;
 
     private byte[] data;
+
+    public LocalDateTime time;
 
 }

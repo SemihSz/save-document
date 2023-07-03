@@ -4,8 +4,6 @@ import com.application.document.model.Role;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Semih, 2.07.2023
