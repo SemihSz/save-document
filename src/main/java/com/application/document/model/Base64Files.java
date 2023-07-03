@@ -1,6 +1,7 @@
 package com.application.document.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Base64;
@@ -10,6 +11,7 @@ import java.util.Base64;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 public class Base64Files {
 
     private String fileName;

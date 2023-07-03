@@ -2,6 +2,8 @@ package com.application.document.service.document;
 
 import com.application.document.model.request.document.SaveDocumentBase64Request;
 import com.application.document.model.request.document.SaveDocumentRequest;
+import com.application.document.model.response.DocumentInfoResponse;
+import com.application.document.model.response.DocumentListResponse;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,6 +20,21 @@ public interface DocumentService {
      */
     Boolean save(SaveDocumentRequest request);
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     Boolean saveBase64(SaveDocumentBase64Request request);
+
+    /**
+     *
+     * @param username
+     * @param userId
+     * @return
+     */
+    DocumentListResponse documents(String username, Long userId);
+
+    DocumentInfoResponse documentInfo(Long documentId);
 
 }
