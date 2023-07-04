@@ -1,7 +1,7 @@
 logging:
   level.*:
     org.springframework.web.client.RestTemplate: INFO
-    com.application.document: INFO
+    com.application.document: DEBUG
   file:
     name: logs/document-app.log
 
