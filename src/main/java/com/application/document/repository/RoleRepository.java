@@ -1,7 +1,7 @@
 package com.application.document.repository;
 
 import com.application.document.entity.RoleEntity;
-import com.application.document.model.Role;
+import com.application.document.model.enums.RoleTypes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +12,5 @@ import java.util.Optional;
  */
 @Repository
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
-    Optional<RoleEntity> findByName(Role name);
+    Optional<RoleEntity> findByName(RoleTypes name);
 }

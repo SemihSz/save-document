@@ -23,6 +23,11 @@ public class SaveDocumentService implements SimpleTask<SaveDocumentRequest, Bool
 
     private final DocumentRepository documentRepository;
 
+    /**
+     * Save document with Multi part file request body
+     * @param request the function argument
+     * @return
+     */
     @Override
     public Boolean apply(SaveDocumentRequest request) {
 

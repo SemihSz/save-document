@@ -36,6 +36,12 @@ public class SaveBase64DocumentService implements SimpleTask<SaveDocumentBase64R
     private final MessageSource messageSource;
 
     private static final DataSize MAX_FILE_SIZE = DataSize.ofMegabytes(5);
+
+    /**
+     * This executable service works with multiple data, create executor service for parallel document save operations.
+     * @param SaveDocumentBase64Request the function argument
+     * @return Boolean
+     */
     @Override
     public Boolean apply(SaveDocumentBase64Request request) {
 

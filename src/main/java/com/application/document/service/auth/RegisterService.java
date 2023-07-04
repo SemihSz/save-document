@@ -4,7 +4,7 @@ import com.application.document.Constant;
 import com.application.document.entity.RoleEntity;
 import com.application.document.entity.UserEntity;
 import com.application.document.exception.AuthException;
-import com.application.document.model.Role;
+import com.application.document.model.enums.RoleTypes;
 import com.application.document.model.request.auth.UserRegisterRequestDTO;
 import com.application.document.repository.RoleRepository;
 import com.application.document.repository.UserRepository;
@@ -53,25 +53,25 @@ public class RegisterService implements SimpleTask<UserRegisterRequestDTO, Boole
             Set<RoleEntity> roles = new HashSet<>();
             // TODO Upgrade here!
             if (strRoles == null) {
-                final RoleEntity userRole = roleRepository.findByName(Role.ROLE_USER)
+                final RoleEntity userRole = roleRepository.findByName(RoleTypes.ROLE_USER)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                 roles.add(userRole);
             } else {
                 switch (strRoles) {
                     case "admin":
-                        RoleEntity adminRole = roleRepository.findByName(Role.ROLE_ADMIN)
+                        RoleEntity adminRole = roleRepository.findByName(RoleTypes.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
                     case "mod":
-                        RoleEntity modRole = roleRepository.findByName(Role.ROLE_MODERATOR)
+                        RoleEntity modRole = roleRepository.findByName(RoleTypes.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
 
                         break;
                     default:
-                        RoleEntity userRole = roleRepository.findByName(Role.ROLE_USER)
+                        RoleEntity userRole = roleRepository.findByName(RoleTypes.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
                 }

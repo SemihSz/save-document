@@ -19,6 +19,11 @@ public class GetDocumentInfoService implements SimpleTask<Long, DocumentInfoResp
 
     private final DocumentRepository documentRepository;
 
+    /**
+     * Get specific document information executable service
+     * @param documentId the function argument
+     * @return DocumentInfoResponse
+     */
     @Override
     public DocumentInfoResponse apply(Long documentId) {
 

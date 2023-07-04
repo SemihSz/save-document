@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectInfoDto {
+public class ProjectInfoDTO {
 
     private String name;
 

@@ -25,7 +25,7 @@ public class GetDocumentListService implements Mappers<String, Long, DocumentLis
      * Get user documents information, response to documents list.
      * @param username the first function argument
      * @param userId the second function argument
-     * @return
+     * @return DocumentListResponse
      */
     @Override
     public DocumentListResponse apply(String username, Long userId) {
