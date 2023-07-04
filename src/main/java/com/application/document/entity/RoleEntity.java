@@ -1,6 +1,6 @@
 package com.application.document.entity;
 
-import com.application.document.model.Role;
+import com.application.document.model.enums.RoleTypes;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +23,6 @@ public class RoleEntity {
 
     @Column(unique = true, nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role name;
+    private RoleTypes name;
 
 }

@@ -2,6 +2,7 @@ package com.application.document.exception;
 
 import com.application.document.model.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(AuthException.class)    public ResponseEntity<ExceptionResponse> tokenError(AuthException ex) {
+    @ExceptionHandler(AuthException.class)
+    public ResponseEntity<ExceptionResponse> tokenError(AuthException ex) {
 
         final ExceptionResponse response = new ExceptionResponse();
         response.setErrorCode(HttpStatus.UNAUTHORIZED.value());
@@ -28,5 +30,27 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         response.setTimestamp(LocalDateTime.now());
 
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ExceptionResponse> businessError(BusinessException ex) {
+
+        final ExceptionResponse response = new ExceptionResponse();
+        response.setErrorCode(HttpStatus.UNPROCESSABLE_ENTITY.value());
+        response.setErrorMessage(ex.getMessage());
+        response.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(FileSizeLimitExceededException.class)
+    public ResponseEntity<ExceptionResponse> businessError(FileSizeLimitExceededException ex) {
+
+        final ExceptionResponse response = new ExceptionResponse();
+        response.setErrorCode(HttpStatus.UNPROCESSABLE_ENTITY.value());
+        response.setErrorMessage(ex.getMessage());
+        response.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }

@@ -20,5 +20,5 @@ import java.util.List;
 @Component
 public class IsAliveConfigurationProperties {
 
-    private List<ProjectInfoDto> packages;
+    private List<ProjectInfoDTO> packages;
 }

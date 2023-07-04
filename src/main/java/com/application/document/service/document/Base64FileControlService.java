@@ -41,7 +41,6 @@ public class Base64FileControlService implements SimpleTask<Base64Files, Integer
                 throw new FileSizeLimitExceededException(messageSource.getMessage(Constant.Exception.FILE_SIZE_LIMIT, null, Locale.ENGLISH),
                         base64Files.decodeBase64Data().length, MAX_FILE_SIZE.toBytes());
             }
-
             String fileExtension = getFileExtension(base64Files.getFileName());
             if (!ALLOWED_EXTENSIONS.contains(fileExtension)) {
                 throw new BusinessException(messageSource.getMessage(Constant.Exception.FILE_NOT_ALLOWED, null, Locale.ENGLISH));

@@ -46,7 +46,7 @@ public class MultipartFileControlService implements Consumer<MultipartFile> {
                         file.getSize(), MAX_FILE_SIZE.toBytes());
             }
 
-            String fileExtension = getFileExtension(file.getOriginalFilename());
+            final String fileExtension = getFileExtension(file.getOriginalFilename());
             if (!ALLOWED_EXTENSIONS.contains(fileExtension)) {
                 throw new BusinessException(messageSource.getMessage(Constant.Exception.FILE_NOT_ALLOWED, null, Locale.ENGLISH));
             }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Created by Semih, 3.07.2023
+ * Document api main service impl layer.
  */
 @Service
 @RequiredArgsConstructor

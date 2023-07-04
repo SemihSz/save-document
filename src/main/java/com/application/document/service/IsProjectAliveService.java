@@ -1,7 +1,7 @@
 package com.application.document.service;
 
 import com.application.document.model.IsAliveConfigurationProperties;
-import com.application.document.model.ProjectInfoDto;
+import com.application.document.model.ProjectInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +16,9 @@ public class IsProjectAliveService {
 
     private final IsAliveConfigurationProperties isAliveConfigurationProperties;
 
-    public ProjectInfoDto getProjectIsAlive(String project) {
+    public ProjectInfoDTO getProjectIsAlive(String project) {
 
-        Optional<ProjectInfoDto> packages = isAliveConfigurationProperties.getPackages().stream().filter(t -> t.getName().equals(project)).findFirst();
+        Optional<ProjectInfoDTO> packages = isAliveConfigurationProperties.getPackages().stream().filter(t -> t.getName().equals(project)).findFirst();
         return packages.orElse(null);
     }
 }
