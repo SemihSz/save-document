@@ -1,40 +1,77 @@
 package com.application.document.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StreamUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
-
-/**
- * Created by Semih, 2.07.2023
- */
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Enumeration;
 
 @Slf4j
-public class RequestResponseLoggingFilter extends OncePerRequestFilter {
+public class RequestResponseLoggingFilter implements Filter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // Log the request
-        log.info("Request URI: {}", request.getRequestURI());
-        log.info("Request Method: {}", request.getMethod());
-        logRequestBody(request);
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
 
-        // Proceed with the filter chain
-        filterChain.doFilter(request, response);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
-        // Log the response
-        log.info("Response Status: {}", response.getStatus());
-        // Log other response details as needed
+        StringBuilder requestInfo = new StringBuilder();
+        requestInfo.append("Incoming request: ")
+                .append(httpServletRequest.getMethod())
+                .append(" ")
+                .append(httpServletRequest.getRequestURI())
+                .append(System.lineSeparator());
+
+        Enumeration<String> headerNames = httpServletRequest.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            String headerValue = httpServletRequest.getHeader(headerName);
+            requestInfo.append(headerName)
+                    .append(": ")
+                    .append(headerValue)
+                    .append(System.lineSeparator());
+        }
+
+//        requestInfo.append("Body: ")
+//                .append(getRequestPayload(httpServletRequest));
+
+        log.info(requestInfo.toString());
+
+        //filterChain.doFilter(servletRequest, servletResponse);
+
+        log.info("Outgoing response: {}", httpServletResponse.getStatus());
     }
 
-    private void logRequestBody(HttpServletRequest request) throws IOException {
-        String requestBody = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
-        log.info("Request Body: {}", requestBody);
+    private String getRequestPayload(HttpServletRequest request) {
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = null;
+        try {
+            InputStream inputStream = request.getInputStream();
+            if (inputStream != null) {
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                char[] charBuffer = new char[128];
+                int bytesRead;
+                while ((bytesRead = bufferedReader.read(charBuffer)) != -1) {
+                    stringBuilder.append(charBuffer, 0, bytesRead);
+                }
+            }
+        } catch (IOException e) {
+            log.error("Error reading request payload", e);
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    log.error("Error closing BufferedReader", e);
+                }
+            }
+        }
+        return stringBuilder.toString();
     }
 }

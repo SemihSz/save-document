@@ -20,6 +20,12 @@ public class Constant {
 
         public static final String FILE_SIZE_LIMIT = "file_size_limit";
 
+        public static final String AUTHORIZATION_VALIDATION = "authorization_validation";
+
+        public static final String AUTHORIZATION_EXPIRED = "authorization_expired";
+
+        public static final String AUTHORIZATION_HEADER = "authorization_header";
+
         public Exception() {
         }
     }

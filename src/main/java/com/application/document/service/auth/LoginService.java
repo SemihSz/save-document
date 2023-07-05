@@ -38,13 +38,12 @@ public class LoginService implements SimpleTask<AuthRequest, JwtResponse> {
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String jwt = jwtTokenUtil.generateJwtToken(authentication);
 
         final UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         final List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-        return new JwtResponse(jwt,
+        return new JwtResponse(jwtTokenUtil.generateToken(userDetails),
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
