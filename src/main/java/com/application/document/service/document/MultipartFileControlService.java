@@ -3,6 +3,7 @@ package com.application.document.service.document;
 import com.application.document.Constant;
 import com.application.document.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.function.Consumer;
  */
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class MultipartFileControlService implements Consumer<MultipartFile> {
 
     private final MessageSource messageSource;
@@ -36,7 +38,7 @@ public class MultipartFileControlService implements Consumer<MultipartFile> {
     public void accept(MultipartFile file) {
 
         try {
-
+            log.info("Control the multi part file size, extension start");
             if (file == null || file.isEmpty()) {
                 throw new BusinessException(messageSource.getMessage(Constant.Exception.FILE_NOT_EMPTY, null, Locale.ENGLISH));
             }
@@ -53,6 +55,8 @@ public class MultipartFileControlService implements Consumer<MultipartFile> {
         } catch (FileSizeLimitExceededException | RuntimeException e) {
             throw new RuntimeException(e);
         }
+        log.info("Control the multi part file size, extension finished");
+
     }
 
     /**

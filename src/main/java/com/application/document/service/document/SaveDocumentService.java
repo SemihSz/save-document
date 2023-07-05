@@ -5,6 +5,7 @@ import com.application.document.model.request.document.SaveDocumentRequest;
 import com.application.document.repository.DocumentRepository;
 import com.application.document.task.SimpleTask;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +18,7 @@ import java.util.Objects;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SaveDocumentService implements SimpleTask<SaveDocumentRequest, Boolean> {
 
     private final MultipartFileControlService fileControlService;
@@ -53,6 +55,7 @@ public class SaveDocumentService implements SimpleTask<SaveDocumentRequest, Bool
                     .time(LocalDateTime.now())
                     .build();
             documentRepository.save(document);
+            log.info("Successfully multi part file saved");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

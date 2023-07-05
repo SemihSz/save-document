@@ -6,6 +6,7 @@ import com.application.document.model.response.DocumentListResponse;
 import com.application.document.repository.DocumentRepository;
 import com.application.document.task.Mappers;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.Objects;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GetDocumentListService implements Mappers<String, Long, DocumentListResponse> {
 
     private final DocumentRepository documentRepository;

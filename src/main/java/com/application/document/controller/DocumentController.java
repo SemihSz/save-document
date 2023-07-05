@@ -3,6 +3,7 @@ package com.application.document.controller;
 import com.application.document.model.RestResponse;
 import com.application.document.model.request.document.SaveDocumentBase64Request;
 import com.application.document.model.request.document.SaveDocumentRequest;
+import com.application.document.model.request.document.UpdateDocumentRequest;
 import com.application.document.model.response.DocumentInfoResponse;
 import com.application.document.service.document.DocumentService;
 import io.swagger.annotations.Api;
@@ -71,6 +72,18 @@ public class DocumentController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + response.getDocument().getFileName() + "\"")
                 .body(resource);
 
+    }
+
+    @DeleteMapping("/delete-document/{documentId}")
+    public ResponseEntity<RestResponse<Boolean>> deleteDocument(@ApiParam(required = true, value = "Document Id", example = "1") @PathVariable Long documentId) {
+
+        return ResponseEntity.ok(new RestResponse(200, documentService.deleteDocument(documentId)));
+    }
+
+    @PostMapping("/update-document")
+    public ResponseEntity<RestResponse<Boolean>> updateDocument(@ApiParam(required = true, value = "UpdateDocumentRequest") @RequestBody UpdateDocumentRequest request) {
+
+        return ResponseEntity.ok(new RestResponse(200, documentService.updateDocument(request)));
     }
 
 }

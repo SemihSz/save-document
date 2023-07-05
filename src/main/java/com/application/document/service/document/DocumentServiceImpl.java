@@ -2,6 +2,7 @@ package com.application.document.service.document;
 
 import com.application.document.model.request.document.SaveDocumentBase64Request;
 import com.application.document.model.request.document.SaveDocumentRequest;
+import com.application.document.model.request.document.UpdateDocumentRequest;
 import com.application.document.model.response.DocumentInfoResponse;
 import com.application.document.model.response.DocumentListResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,10 @@ public class DocumentServiceImpl implements DocumentService {
 
     private final GetDocumentInfoService getDocumentInfoService;
 
+    private final DeleteDocumentService deleteDocumentService;
+
+    private final UpdateDocumentService updateDocumentService;
+
     @Override
     public Boolean save(SaveDocumentRequest request) {
         return saveDocumentService.apply(request);
@@ -42,5 +47,15 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public DocumentInfoResponse documentInfo(Long documentId) {
         return getDocumentInfoService.apply(documentId);
+    }
+
+    @Override
+    public Boolean deleteDocument(Long documentId) {
+        return deleteDocumentService.apply(documentId);
+    }
+
+    @Override
+    public DocumentInfoResponse updateDocument(UpdateDocumentRequest request) {
+        return updateDocumentService.apply(request);
     }
 }

@@ -6,6 +6,7 @@ import com.application.document.model.response.DocumentInfoResponse;
 import com.application.document.repository.DocumentRepository;
 import com.application.document.task.SimpleTask;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -15,6 +16,7 @@ import java.util.Objects;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GetDocumentInfoService implements SimpleTask<Long, DocumentInfoResponse> {
 
     private final DocumentRepository documentRepository;

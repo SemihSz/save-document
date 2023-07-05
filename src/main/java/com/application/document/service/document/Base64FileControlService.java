@@ -6,6 +6,7 @@ import com.application.document.exception.BusinessException;
 import com.application.document.model.Base64Files;
 import com.application.document.task.SimpleTask;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class Base64FileControlService implements SimpleTask<Base64Files, Integer> {
 
     private final MessageSource messageSource;
