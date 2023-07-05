@@ -5,6 +5,7 @@ Save user document application
 This project was developed with Spring boot and Java 8.
 
 Architecture Design:
+
 ![save-document-flow-architectur](https://github.com/SemihSz/save-document/assets/37926760/42177086-3b18-4473-98b7-a92a8057dfe6)
 In general, services come from the service interface through the controller. In the ServiceImpl part, it continues its operations by calling the executable that the services need to do. 
 In this way, that executable service can be called to other places repeatedly.
@@ -19,3 +20,14 @@ This application is a file management system that allows the user to save docume
 
 Dependencies List:
 ![image](https://github.com/SemihSz/save-document/assets/37926760/904fae5f-c571-4697-a9bf-b0ea1a43fece)
+
+Postman Request List:
+
+![img.png](img.png)
+
+Some file inside of project
+
+- application-document-project.postman_collection.json
+- save-document-flow.drawio
+- save-document-flow.png
+- save-document-flow-architectur.png
