@@ -30,6 +30,13 @@ public interface DocumentService {
     Boolean saveBase64(SaveDocumentBase64Request request);
 
     /**
+     * Save document information via. base64 format usage CompletableFutures (Optional save operation for multiple files)
+     * @param request SaveDocumentBase64Request
+     * @return Boolean
+     */
+    Boolean saveBase64Futures(SaveDocumentBase64Request request);
+
+    /**
      * User documents information response
      * @param username String
      * @param userId Long

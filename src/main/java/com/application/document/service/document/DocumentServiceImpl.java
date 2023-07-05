@@ -29,6 +29,8 @@ public class DocumentServiceImpl implements DocumentService {
 
     private final UpdateDocumentService updateDocumentService;
 
+    private final CompletableFutureBase64Document completableFutureBase64Document;
+
     @Override
     public Boolean save(SaveDocumentRequest request) {
         return saveDocumentService.apply(request);
@@ -37,6 +39,11 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public Boolean saveBase64(SaveDocumentBase64Request request) {
         return saveBase64DocumentService.apply(request);
+    }
+
+    @Override
+    public Boolean saveBase64Futures(SaveDocumentBase64Request request) {
+        return completableFutureBase64Document.apply(request);
     }
 
     @Override

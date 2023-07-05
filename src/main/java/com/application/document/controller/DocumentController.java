@@ -45,6 +45,12 @@ public class DocumentController {
         return ResponseEntity.ok(new RestResponse(200, documentService.saveBase64(request)));
     }
 
+    @PostMapping(value = "/save-base64-futures", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestResponse> uploadBase64DocumentFutures(@ApiParam(required = true, value = "Save document with base64 string request model body") @RequestBody SaveDocumentBase64Request request) {
+
+        return ResponseEntity.ok(new RestResponse(200, documentService.saveBase64Futures(request)));
+    }
+
     @GetMapping("/document-list/{username}/{userId}")
     public ResponseEntity<RestResponse> documentList(@ApiParam(required = true, value = "Username", example = "testusername") @PathVariable String username,
                                                      @ApiParam(required = true, value = "User Id", example = "1") @PathVariable Long userId) {
