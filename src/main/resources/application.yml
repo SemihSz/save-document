@@ -3,3 +3,6 @@ spring:
     name: document-api
   profiles:
     active: dev
+  output:
+    ansi:
+      enabled: ALWAYS

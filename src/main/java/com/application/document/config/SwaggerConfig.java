@@ -32,20 +32,13 @@ import java.util.stream.Collectors;
 @Component
 public class SwaggerConfig {
 
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-
-    private ApiKey apiKey() {
-        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
-    }
-
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.application.document"))
                 .paths(PathSelectors.any())
-                .build().apiInfo(metaData())
-                .securitySchemes(Arrays.asList(apiKey()));
+                .build().apiInfo(metaData());
     }
 
     private ApiInfo metaData() {

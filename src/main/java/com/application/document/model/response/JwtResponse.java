@@ -1,19 +1,15 @@
 package com.application.document.model.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 /**
  * Created by Semih, 3.07.2023
  */
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class JwtResponse {
 
     private String token;

@@ -4,6 +4,7 @@ package com.application.document.config;
 import com.application.document.service.auth.JwtAuthenticationEntryPoint;
 import com.application.document.service.auth.JwtRequestFilter;
 import com.application.document.service.auth.JwtUserDetailsService;
+import io.swagger.models.HttpMethod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -74,15 +76,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers(AUTH_LIST).authenticated().and().httpBasic().authenticationEntryPoint(swaggerAuthenticationEntryPoint()).and()
                 .authorizeRequests().antMatchers("/api/auth/v1/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers( "/swagger-ui/**").permitAll()
-                .antMatchers( "/v3/api-docs").permitAll()
-                .antMatchers("/v2/api-docs").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/h2-console/**").permitAll().and()
+                .authorizeRequests().antMatchers("/swagger-ui.html", "/swagger-resources/**", "/v2/api-docs")
+                .permitAll()
+                .anyRequest().authenticated().and().httpBasic();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.headers().frameOptions().disable();
     }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().mvcMatchers(HttpMethod.OPTIONS.name(), "/**");
+        web.ignoring().mvcMatchers("/swagger-ui/**", "/configuration/**", "/swagger-resources/**", "/v2/api-docs","/webjars/**");
+    }
+
     @Bean
     public BasicAuthenticationEntryPoint swaggerAuthenticationEntryPoint() {
         BasicAuthenticationEntryPoint entryPoint = new BasicAuthenticationEntryPoint();

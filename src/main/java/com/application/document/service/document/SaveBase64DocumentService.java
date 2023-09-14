@@ -89,4 +89,60 @@ public class SaveBase64DocumentService implements SimpleTask<SaveDocumentBase64R
 
         return Boolean.TRUE;
     }
+
+
+//    @Override
+//    public Boolean apply(SaveDocumentBase64Request saveDocumentBase64Request) {
+//        AtomicInteger sizeOfFiles = new AtomicInteger();
+//        var virtualThreadExecutor = Executors.newVirtualThreadPerTaskExecutor();
+//
+//        for (Base64Files base64File : saveDocumentBase64Request.getFilesList()) {
+//            virtualThreadExecutor.execute(() -> {
+//                try {
+//                    log.info("Base64File file name: {}", base64File.getFileName());
+//                    byte[] fileBytes = base64File.decodeBase64Data();
+//                    final FileOutputStream fileOutputStream = new FileOutputStream(base64File.getFileName());
+//                    fileOutputStream.write(fileBytes);
+//                    fileOutputStream.close();
+//
+//                    sizeOfFiles.addAndGet(base64FileControlService.apply(base64File));
+//
+//                    // Total file bytes size firstly, convert megabyte then total size of files lower than 5MB. Program will save file on DB.
+//                    if (sizeOfFiles.intValue() <= 5 * 1000000L) {
+//                        final DocumentEntity document = DocumentEntity.builder()
+//                                .userId(saveDocumentBase64Request.getUserId())
+//                                .username(saveDocumentBase64Request.getUsername())
+//                                .fileType(base64File.getFileType())
+//                                .fileName(base64File.getFileName())
+//                                .data(fileBytes)
+//                                .time(LocalDateTime.now())
+//                                .build();
+//                        documentRepository.save(document);
+//                        log.info("SaveBase64DocumentService is successfully");
+//                    }
+//                    // TODO TEST
+//                    // If total files size greater than 5MB, this else block will throw exception for user.
+//                    else {
+//                        throw new FileSizeLimitExceededException(messageSource.getMessage(Constant.Exception.FILE_SIZE_LIMIT, null, Locale.ENGLISH),
+//                                sizeOfFiles.intValue(), MAX_FILE_SIZE.toBytes());
+//                    }
+//
+//                } catch (IOException e) {
+//                    log.error("SaveBase64DocumentService: {}", e.getMessage());
+//                }
+//            });
+//        }
+//
+////        // Java Virtual Threads Executor'ünü kapatın (Java 17+ kullanılıyorsa bu gerekli değil)
+////        if (virtualThreadExecutor instanceof AutoCloseable) {
+////            try {
+////                ((AutoCloseable) virtualThreadExecutor).close();
+////            } catch (Exception e) {
+////                log.error("Error closing Virtual Threads Executor: {}", e.getMessage());
+////            }
+////        }
+//
+//        return Boolean.TRUE;
+//    }
+
 }
